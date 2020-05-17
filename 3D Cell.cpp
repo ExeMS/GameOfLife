@@ -14,6 +14,8 @@
 
 
 // Sets default values
+
+//This function basicly constructes the class. It sets the mesh and the collision.
 ACell::ACell()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -51,7 +53,7 @@ ACell::ACell()
 }
 
 // Called when the game starts or when spawned
-void ACell::BeginPlay()
+void ACell::BeginPlay() //This function is initiated upon play. All it does it wait for 1 second the call another function.
 {
 	Super::BeginPlay();
 	GetWorld()->GetTimerManager().SetTimer(MainLoop, this, &ACell::InitCell, 1, true, 1.0f);
@@ -59,7 +61,7 @@ void ACell::BeginPlay()
 }
 
 // Called every frame
-void ACell::Tick(float DeltaTime)
+void ACell::Tick(float DeltaTime) // This function is somewhat unneeded however it does make sure that the cell is always in the correct state.
 {
 
 	Super::Tick(DeltaTime);
@@ -73,7 +75,7 @@ void ACell::Tick(float DeltaTime)
 
 }
 
-void ACell::InitCell()
+void ACell::InitCell() //This inititates the cell, setting up the randomness and then calling the main looping function.
 {
 	bAlive = rand() % 2;
 	//TArray<AActor*> NeighboursInit;
@@ -86,7 +88,7 @@ void ACell::InitCell()
 	GetWorld()->GetTimerManager().SetTimer(MainLoop, this, &ACell::onTimerFire, 1, true, 0.5f);
 }
 
-void ACell::onTimerFire() 
+void ACell::onTimerFire() //every 0.5 seconds this function occurs. It makes sure that all the neighbours work properly and then it will increment the neighbour number if that is true.
 {
 	int NeighbourNum = 0;
 	ACell* TempCell;
