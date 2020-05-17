@@ -43,6 +43,28 @@ ACell::ACell()
 	CollBox->SetBoxExtent(FVector(65,65,65));
 	CollBox->SetupAttachment(MainMesh);
 	CollBox->SetActive(true);
+	
+	if (GetActorLocation() == FVector(0,0,0)) { //Only needs to be done for one of the cells.
+
+
+		if (mDeadAsset.Succeeded())
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Dead material has been loaded correctly.")));
+		}
+		else {
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Error: Dead material is not found.")));
+		}
+
+		if (mAliveAsset.Succeeded())
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Alive material has been loaded correctly.")));
+		}
+		else {
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Error: Alive material is not found.")));
+		}
+
+	}
+	
 	MainMesh->SetMaterial(0, MainMat);
 	CollBox->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	
