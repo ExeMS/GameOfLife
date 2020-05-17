@@ -7,6 +7,8 @@ AMaster::AMaster()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	//This is if the default use of a class is desired. Though it will remain commented out
+	//ActorToSpawn = TSubclassOf<ACell>();
 
 }
 
