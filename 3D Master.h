@@ -22,5 +22,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<AActor> ActorToSpawn;
+	// ^ This code isn't really needed however it does allow the user to interchange the cell that is spawned.
 
 };
