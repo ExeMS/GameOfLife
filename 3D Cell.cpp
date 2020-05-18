@@ -115,10 +115,11 @@ void ACell::InitCell() //This inititates the cell, setting up the randomness and
 void ACell::onTimerFire() //every 0.5 seconds this function occurs. It makes sure that all the neighbours work properly and then it will increment the neighbour number if that is true.
 {
 	int NeighbourNum = 0;
-	ACell* TempCell;
+	ACell* TempCell; //This is just a temporary variable, not point in creating a universal variable.
 	for (size_t i = 0; i < (NeighboursInit.Num()); i++)
 	{
 		TempCell = Cast<ACell>(NeighboursInit[i]);
+		//The if statement makes sure that the object casted to was a cell object and not just something else.
 		if (TempCell != nullptr)
 		{
 
@@ -131,8 +132,8 @@ void ACell::onTimerFire() //every 0.5 seconds this function occurs. It makes sur
 		}
 
 	}
-
-	if (bAlive == true) {
+	//The logic that decides what will happen to the cell.
+	if (bAlive == true) {  
 		if (NeighbourNum < 2) {
 			bAlive = false;
 		}
