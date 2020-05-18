@@ -27,7 +27,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 		bool bAlive;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default") //This variable isn't really needed as the NeighboursInit variable is used.
 		TArray<ACell*> Neighbours;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
