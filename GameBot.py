@@ -15,15 +15,17 @@ class GoL:
         self.rows = rows
         self.columns = columns
     def findOutput(self):
-        output = ''
+        outputList = []
         for i in range(self.rows):
+            output = ''
             for j in range(self.columns):
                 if self.board[i][j].state == 0:
-                    output += ' D '
+                    output += '<:b_:708663476729413693>'
                 else:
-                    output+= ' A '
-            output+='\n'
-        return output
+                    output+= '<:w_:708663422924882051>'
+            outputList.append(output)
+        return outputList
+    
     def update(self):
         for a in range(self.rows):
             for b in range(self.columns):
@@ -31,7 +33,7 @@ class GoL:
                 for i in range(self.board[a][b].location[0]-1, self.board[a][b].location[0]+2):
                     if not(i < 0 or i >= self.rows):
                         for j in range(self.board[a][b].location[1]-1, self.board[a][b].location[1]+2):
-                            if not(j < 0 or j >= self.rows):
+                            if not(j < 0 or j >= self.columns):
                                 if self.board[i][j] != self.board[a][b]:
                                     if self.board[i][j].state == 1:
                                         liveNeighbours += 1
@@ -69,18 +71,21 @@ async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
     
 @bot.command(pass_context=True, name = 'GameOfLife')
-async def _GameOfLife(ctx, rows = 10, columns = 10, sleep = 1):
+async def _GameOfLife(ctx, rows = 5, columns = 5, sleep = 5):
     rows = int(rows)
     columns = int(columns)
     sleep = int(sleep)
-    msg = await ctx.send('Starting Game of Life, stop me with !stopGoL')
+    msgList = [await ctx.send('Starting Game of Life, stop me with !stopGoL')]
+    for i in range(rows - 1):
+        msgList.append(await ctx.send('_'))
     s(5)
     global gol
     gol = True
     while gol:
         game = GoLsetup(rows, columns)
-        output = game.findOutput()
-        await msg.edit(content = output)
+        outputList = game.findOutput()
+        for i in range(rows):
+            await msgList[i].edit(content = outputList[i])
         s(sleep)
         game.update()
     
