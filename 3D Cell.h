@@ -23,7 +23,7 @@ protected:
 	//class UBoxComponent* OverlapObj;
 
 public:	
-	// Called every frame
+	// UProperties are basicly just global variables for the class. All private variables are in the main cpp file.
 	virtual void Tick(float DeltaTime) override;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 		bool bAlive;
@@ -37,15 +37,15 @@ public:
 		//UStaticMeshComponent* MainMesh;
 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere) 
 		class UMaterialInterface* MainMat;
 	UPROPERTY(EditAnywhere)
 		class UMaterialInterface* OtherMat;
 
 	UPROPERTY(EditAnywhere)
-		class UStaticMeshComponent* MainMesh;
+		class UStaticMeshComponent* MainMesh; //The mesh that will be used. It's only technicallt a reference to a class such that a mesh can be spawned.
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere) //The invisible collision that is used to find out which of the cells are this ones neighbours.
 		UBoxComponent* CollBox;
 
 
