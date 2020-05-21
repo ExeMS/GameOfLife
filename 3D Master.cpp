@@ -18,6 +18,13 @@ AMaster::AMaster()
 void AMaster::BeginPlay()
 {
 	Super::BeginPlay();
+	//The code for creating the start of game ui element.
+	UUserWidget* WidgetRef;
+	WidgetRef = CreateWidget<UUserWidget>(GetWorld(), WidgetClassVar); //Creates a ui element
+	if (WidgetRef != nullptr) //Checks to mke sure a UI element has been created or it'll crash
+	{
+		WidgetRef->AddToViewport(); //Lets the use see it.
+	}
 	FActorSpawnParameters SpawnParams;
 	//^nothing important needed here in this case.
 	for (size_t x = 0; x < 10; x++)
