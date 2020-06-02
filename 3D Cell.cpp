@@ -97,11 +97,13 @@ void ACell::Tick(float DeltaTime) // This function is somewhat unneeded however 
 {
 
 	Super::Tick(DeltaTime);
-	if (bAlive) {
+	if (bAlive)
+	{
 		MainMesh->SetVisibility(true,false);
 		//^Makes the cube visible
 	}
-	else {
+	else 
+	{
 		MainMesh->SetVisibility(false, false);
 		//^Makes the cube invisible just ignore the second bool
 	}
@@ -137,7 +139,8 @@ void ACell::onTimerFire() //every 0.5 seconds this function occurs. It makes sur
 		if (TempCell != nullptr)
 		{
 
-			if (TempCell->bAlive == true) {
+			if (TempCell->bAlive == true)
+			{
 				NeighbourNum += 1;
 			} //It might sometimes fail and if it does it is fine.
 		}
@@ -147,8 +150,10 @@ void ACell::onTimerFire() //every 0.5 seconds this function occurs. It makes sur
 
 	}
 	//The logic that decides what will happen to the cell.
-	if (bAlive == true) {  
-		if (NeighbourNum < 2) {
+	if (bAlive == true) 
+	{  
+		if (NeighbourNum < 2) 
+		{
 			bAlive = false;
 		}
 		else if (NeighbourNum > 3)
@@ -156,8 +161,10 @@ void ACell::onTimerFire() //every 0.5 seconds this function occurs. It makes sur
 			bAlive = false;
 		}
 	}
-	else {
-		if (NeighbourNum == 3) {
+	else 
+	{
+		if (NeighbourNum == 3)
+		{
 			bAlive = true;
 		}
 	}
