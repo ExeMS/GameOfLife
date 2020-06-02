@@ -9,6 +9,7 @@
 #include "Components/ActorComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/MeshComponent.h"
+#include "Material/Material.h"
 #include "TimerManager.h"
 #include "Engine/Engine.h"
 
