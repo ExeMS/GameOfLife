@@ -118,12 +118,14 @@ void ACell::InitCell() //This inititates the cell, setting up the randomness and
 	//TArray<AActor*> NeighboursInit;
 	GetOverlappingActors(NeighboursInit, TSubclassOf<ACell>()); //Sets a variable to all the objects its overlapping.
 	//FTimerHandle MainLoop;
+	
+	
 	if (GetActorLocation() == FVector(0, 0, 0))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("How many neighbours x: %f"), NeighboursInit.Num()));
 	}
 	//^This code is more for debuging the if statement checks to make sure that it's only the cell at 0,0,0 that runs the code so that only one print statement will occure.
-	//Note the command AddOnScreenDebugMessage will only be used in editor versions hence it's fine if an exe is needed.
+	//Note the command AddOnScreenDebugMessage will only be used in editor versions hence it's fine if an exe is needed as it will not appear.
 	GetWorld()->GetTimerManager().SetTimer(MainLoop, this, &ACell::onTimerFire, 1, true, 0.5f);
 	//^The main loop
 }
