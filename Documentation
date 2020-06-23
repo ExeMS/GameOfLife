@@ -1,0 +1,315 @@
+Analysis
+The game of life was invented by John Conway in 1970. It was designed to emulate the growth and death of cells through mathematics. At the time personal computers were beginning to become popular and hence because of the emergent behaviour the game of life also became popular. The game of life was always 2 dimensional, firstly because at the time computers found 3 dimensional graphics too demanding and secondly because it is far easier to comprehend a 2 dimensional grid. However now that computers have gotten far more powerful creating the game of life in 3 dimensions is now possible.  
+
+Rules
+The original game of life was made up of a blank 2 dimensional array of pixels. Each pixel could either be alive or dead, which would be telegraphed with a change of colour. If a dead pixel was surrounded by 3 alive pixels it would become alive.
+If an alive pixel was surrounded by less than 3 alive pixels or more than 4 it would become dead. 
+These simple rules lead to complex emergent behaviour.  
+While the extra dimension does mean that the cells now have more neighbours I have decided not to change the rules so that it might in some ways emulate the 2 dimensional version of the game.
+
+Objectives
+The main objectives are:
+•	To make a simple 3 dimensional version of the game of life. It should be playable to downloading a simple executable. It should also be understandable to a human as the game of life.
+•	To create a version of the game of life accessible within a widely used communication platform (Discord).
+•	To create a version of the game of life available within a browser.
+3D Game of Life
+Solution
+It would be largely impractical to build and entire 3D game engine from scratch for this project and hence I have used Unreal Engine 4.
+Unreal Engine is currently one of the most advanced game engines that exist. It allows the user to write code in C++ or a visual scripting language called blueprints. This project uses nearly exclusively C++ because of its efficiency and will only use blueprints for calling a C++ function in the user interface. Unreal Engine is typically used for far larger projects and by far more experienced programmers. This means that learning it can be difficult because of the lack of documentation and tutorials.
+
+End User Input
+The intended end user will be people that wish to explore what game of life would look like if it was created in 3 dimensions. This may end up being more of a novelty than a program which the user uses for a long time. The two reasons for this are firstly that it is difficult to comprehend what is happening and secondly that the grid cannot be of the size that a typical game of life grid because of the resource constraints on the computer.
+Data was gathered from a small survey.
+
+
+44% Said had never heard of Conway’s game of life
+44% said they had heard of Conway’s game of life
+11% said they had used Conway’s game of life.
+Of the people who said they’d heard of it not used it:
+75% said they be interested in using it.
+
+The rest of the survey was only taken on people that had used it or heard of it and said they were interested in using it.
+100% of people said they would be interested in a 3D version.
+Asked on what features they think should be included they said:
+75% said good graphics
+25% said a large number of cells
+100% said a good user interface
+25% said “speed”
+25% said “Ability to add pre-made structures or a random start and a guide to in game rules.”
+
+The project does to some degree for fill these feature requests. For instance it can be said based on the renderer that it did have good graphics. The programme also has a random start though no guide or ability to make pre-made structures.
+
+
+
+Design
+The programme is based around the use of Unreal Engine 4 hence the engine’s API has been used greatly in making this project’s code. The project is made up of mostly C++ that can be compiled into an executable file. 
+The programme is composed of two main classes, master and cell. The master class has only one function which is to spawn all of the cell objects. When it is initiated it will run through three imbedded loops which essentially create a 3D array of cell objects.  It also has another function when which is to display a simple UI element which contains the title. After the master object has initiated the programme it will not do anything.
+The other main class is the cell class. One hundred of these are spawned by the master object. Each one of these has two components inherited from the engine’s classes. These are a visual mesh so that the user can see which cells are alive and which are dead along with a collision box such that the object can tell which other cells are its neighbours.
+When the class is spawned in the world a small amount of time is waited so as to assure that all the other instances of that class have been spawned as well.
+A function called InitCell is then ran. This function chooses a random state out of alive or dead for the cell to begin in. It then runs an engine function called GetOverlappingActors which returns a list of all the overlapping actors of a specified class, which in this case is the cell class. Another loop will then be initiated that runs the function onTimerFire every 0.5 seconds. This function runs for every one of an objects neighbours and by finding if they are alive or dead, knows the total number of alive neighbours. It can then update the cell based on the number of neighbours whether it should stay the same or change state based on a small number of if statements. Each class by default also has a function that it runs for every game tick (update of the games visuals). This is used to update the graphical element of the cell based on whether it is alive or dead. A possible alteration to the code would be to make it so that the cell’s state is updated every frame however this would lead to the changes of the cell being far too fast to understand. Another problem with this method would be that computers run a different speeds meaning that the game would update at different rates for different people making it inconsistent.
+
+There is also the function called delayeddestroyself which is used in blueprint for the UI element that is spawned by the master object. This function destroys the UI element after a short time has been waited in the UI blueprints.
+
+All the code that is either a .h file or a .cpp file is the source code for this project https://github.com/ExeMS/GameOfLife 
+Discord Game of Life
+Solution
+Discord was chosen as the platform for this version of the game of life due to it’s built in compatibility and ease of use when it comes to creating ‘bots’ – users controlled fully by code, explicitly stated to be as such and creatable from an existing account rather than requiring an account (and necessary personal information that is required for an account) of their own.
+Python was chosen as the language to code this bot in due to prior knowledge in creating Discord bots in Python as well as the existence of clear documentation of how the necessary modules to connect and interface with Discord.
+
+End User Input
+The intended end user would be someone who wishes to see a simulation of the game of life without having to download any external programmes; just add a bot to a Discord Server they have access to. Another small survey was conducted purely on interest in this particular aspect of the project, as general information had already been gathered.
+88% of people asked said they used discord regularly or had discord installed on their device already
+Of those who had discord, 50% said they were interested in a version of the game of life that they could use within discord.
+From those who were interested in using the game of life within discord, when asked on features that should be included:
+100% said that it should be easy to use
+75% said that it should be visual with emojis rather than text output
+50% said that it should be able to have a large board of cells
+25% said that it should be fast when running
+All of these have been fulfilled within the project to a degree (with a large board, the program becomes slower so those two goals cannot be achieved simultaneously).
+
+Design
+The programme is composed of two classes; the class for the game board and it’s main function and a class for the individual cells. There is also a function called to set up the game board and two ‘Discord Functions’; functions called by inputting commands into a Discord Server that the bot is on.
+The first class, named ‘GoL’ contains 3 variables, called board, rows and columns, intended to contain a 2d array of cells, the amount of rows and the amounts of columns respectively. GoL also contains two functions. findOutput goes through the board, using the other variables to index, checking each value and adding the corresponding black or white square custom emoji code to a 2d array to be returned when complete. The emoji codes allow the bot to output emojis into the server chat, making the result at the end easier to read. The update function also goes through the board, setting each cells ‘nextState’ variable to the correct state (dead or alive) using the rules above for when the board updates. Then, the function sets all of the ‘state’ variables in each cell to the value in ‘nextState’.
+The Second class, named cell, just stores it’s current state, it’s next state and it’s location. It is used purely as a way of storing information more conveniently.
+The GolSetup function uses a given amount of rows and columns and creates a variable with the GoL class containing randomly set cells in the board variable as well as passing on the rows and columns values. This variable is then returned.
+There is then some necessary code required to connect the bot to discord properly, followed by the first Discord Function: GameOfLife, called by typing !GameOfLife as well as size values and update rate if wanted into a channel that the bot has access to on a discord server. This causes the bot to send a message stating that the other function should be used to stop it. The code then creates a game using GoLSetup and sets a global variable to say that a game is running to True, then runs an update, followed by an output check, followed by editing messages it has sent to create the board in the Discord chat on loop until the variable is false
+The final discord function, called with !stopGoL, sets the global variable to false, stopping ongoing games.
+The full code is below as well as at the link above with the 3D version:
+#GameBot
+import os
+from random import randint as r
+from time import sleep as s
+import discord
+from discord.ext import commands
+from discord import Webhook, AsyncWebhookAdapter
+from dotenv import load_dotenv
+import aiohttp
+
+gol = False
+class GoL:
+    def __init__(self, board, rows, columns):
+        self.board = board
+        self.rows = rows
+        self.columns = columns
+    def findOutput(self):
+        outputList = []
+        for i in range(self.rows):
+            output = ''
+            for j in range(self.columns):
+                if self.board[i][j].state == 0:
+                    output += '<:b_:708663476729413693>'
+                else:
+                    output+= '<:w_:708663422924882051>'
+            outputList.append(output)
+        return outputList
+    
+    def update(self):
+        for a in range(self.rows):
+            for b in range(self.columns):
+                liveNeighbours = 0
+                for i in range(self.board[a][b].location[0]-1, self.board[a][b].location[0]+2):
+                    if not(i < 0 or i >= self.rows):
+                        for j in range(self.board[a][b].location[1]-1, self.board[a][b].location[1]+2):
+                            if not(j < 0 or j >= self.columns):
+                                if self.board[i][j] != self.board[a][b]:
+                                    if self.board[i][j].state == 1:
+                                        liveNeighbours += 1
+                if self.board[a][b].state == 0 and liveNeighbours == 3:
+                    self.board[a][b].nextState = 1
+                elif self.board[a][b].state ==1 and (liveNeighbours < 2 or liveNeighbours > 3):
+                    self.board[a][b].nextState = 0
+                else:
+                    self.board[a][b].nextState = self.board[a][b].state
+        for a in range(self.rows):
+            for b in range(self.columns):
+                self.board[a][b].state = self.board[a][b].nextState
+
+
+class cell:
+    def __init__(self, state, location, nextState):
+        self.state = state
+        self.location = location
+        self.nextState = nextState
+
+def GoLsetup(rows, columns):
+    board = []
+    for i in range(rows):
+        board.append([])
+        for j in range(columns):
+            board[i].append(cell(r(0,1), [i,j], 0))
+    game = GoL(board, rows, columns)
+    return game
+bot = commands.Bot(command_prefix='!')
+load_dotenv()
+token = os.getenv("NzA4Mjk5NjY5MzMxMTE2MDg4.XrXjNA.3Jm_YjPlkAfCeyr2AAY3QiWOsIo")
+GUILD = os.getenv('DISCORD_GUILD')
+@bot.event
+async def on_ready():
+    print(f'{bot.user.name} has connected to Discord!')
+    
+@bot.command(pass_context=True, name = 'GameOfLife')
+async def _GameOfLife(ctx, rows = 5, columns = 5, sleep = 5):
+    rows = int(rows)
+    columns = int(columns)
+    sleep = int(sleep)
+    msgList = [await ctx.send('Starting Game of Life, stop me with !stopGoL')]
+    for i in range(rows - 1):
+        msgList.append(await ctx.send('_'))
+    s(5)
+    global gol
+    gol = True
+    while gol:
+        game = GoLsetup(rows, columns)
+        outputList = game.findOutput()
+        for i in range(rows):
+            await msgList[i].edit(content = outputList[i])
+        s(sleep)
+        game.update()
+    
+@bot.command(pass_context=True, name = 'stopGoL')
+async def _stopGoL(ctx):
+    global gol
+    gol = False
+
+bot.run("NzA4Mjk5NjY5MzMxMTE2MDg4.XrXjNA.3Jm_YjPlkAfCeyr2AAY3QiWOsIo")
+print("Hello")
+
+Web Version (JavaScript)
+Solution:
+This part of the project was to make the game of life in an easily presentable and accessible format, for example for people who might want to quickly demonstrate the idea of the game to a friend.
+Javascript was chosen as the language of implementation because it is accessible in the web browser and requires no additional downloads or libraries: almost everyone with a computer can run the code.
+Furthermore, javascript is useful for presentations because it requires little to no set-up beforehand, and it is quickly readable and changeable if necessary.
+
+End user input:
+100% of people asked in a survey for users who want an easily presentable game of life care about a “tidy, simple UI”. This program attempts to achieve this in a minimalistic way: the only window or information immediately available to the user is the display of the current grid.
+100% of people asked also want a fast, delay-free implemenemenetation.
+
+Design:
+The input:
+Because the objective of this part of the project was simply to have an easily demonstratable Game of Life Project, the user input is almost none: a user input would make the program slower to startup to demonstrate to others.
+Instead, a randomly generated board will be created in the setup phase, which is a 2D array. If required, the user can manually edit the tiles using the console, however the program is not intended to be used this way.
+
+Every second, the Draw function is called. This will firstly clear the existing screen display, and then will make a new screen display.
+This new display will use for loops to iterate through the 2D board array. Whenever a tile is, represented by a 1 in the array, a square will be drawn at appropriate co-ordinates on the canvas according to the current position of the for loops.
+Next, another series of for loops is called to check through each tile of the 2D array. The total neighbours of each tile are counted, and, depending on the result of the number of neighbours, the tile may be marked to change using the nboard array.
+Finally, board will become the changed nboard array for the next second.
+This is a simple design to ensure users experience little to no slowness due to resource issues from the program: making sure the program is delay-free according to the user feedback.
+ 
+The implementation:
+board = CreateBoard(100);
+cellrow = 100;
+ 
+function setup() {
+  createCanvas(500, 500);
+  background(100);
+  frameRate(1);
+ 
+ 
+}
+ 
+function CreateBoard(cellrow){
+  board = new Array(cellrow);
+     for(x = 0; x < cellrow; x++){
+ 
+      board[x] = new Array(cellrow);
+ 
+ 
+      for(y = 0; y < cellrow; y++){
+          board[x][y] = Math.floor(Math.random() * 2);
+            }
+        }
+    return board;
+    }
+function write(){
+     size = 500/cellrow;
+     for(x = 0; x < cellrow; x++){
+       for(y = 0; y < cellrow; y++){
+          if (board[x][y] == 1){
+              rect(x*size,y*size,size,size);
+                }
+            }
+    }
+     
+}
+function counting(){
+  nboard = [];
+     for(x = 0; x < cellrow; x++){
+ 
+      nboard[x] = new Array(cellrow);
+ 
+ 
+      for(y = 0; y < cellrow; y++){
+          nboard[x][y] = board[x][y];
+            neighbours = findneighbours(x,y);
+            if (neighbours == 3){
+              nboard[x][y] = 1
+                }
+            if (neighbours < 2){
+              nboard[x][y] = 0;
+                }
+            if (neighbours > 3){
+              nboard[x][y] = 0;
+                }
+               
+     
+            }
+        }
+        return nboard
+   
+}
+ 
+function findneighbours(x,y){
+  total = 0;
+     for(i = -1; i < 2; i++){
+       for(j = -1; j < 2; j++){
+          row = (x+i +cellrow)%cellrow;
+            column = (y+j+cellrow)%cellrow;
+            total += board[row][column];
+        
+           
+       
+       }
+    }
+    return total
+}
+
+function draw(){
+    clear();
+    write();
+    nboard = counting();
+    board = nboard;
+}
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
